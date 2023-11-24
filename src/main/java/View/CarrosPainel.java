@@ -107,6 +107,7 @@ public class CarrosPainel extends JPanel {
         // Configura a ação do botão "cadastrar" para adicionar um novo registro no
         // banco de dados
 
+        
         cadastrar.addActionListener(e -> {
             String marca = marcaText.getText();
             String modelo = modeloText.getText();
@@ -125,7 +126,7 @@ public class CarrosPainel extends JPanel {
 
             try {
 
-                // Agora você pode chamar o método cadastrar com os dados válidos
+                //chamar o método cadastrar com os dados válidos
                 operacoes.cadastrar(marca, modelo, ano, preco, cor, placa);
 
                 // Limpa os campos após o cadastro bem-sucedido
@@ -137,7 +138,7 @@ public class CarrosPainel extends JPanel {
                 placaText.setText("");
             } catch (NumberFormatException ex) {
                 // Exibe uma mensagem de erro ao usuário se houver problemas na conversão
-                JOptionPane.showMessageDialog(this, "Ano e Valor devem ser números válidos.", "Erro de Cadastro",
+                JOptionPane.showMessageDialog(this, "Dados inválidos. Verifique as informações.", "Erro de Cadastro",
                         JOptionPane.ERROR_MESSAGE);
             }
         });

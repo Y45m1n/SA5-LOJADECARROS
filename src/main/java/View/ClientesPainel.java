@@ -115,30 +115,27 @@ public class ClientesPainel extends JPanel {
             }
 
             try {
-                int cpfInt = Integer.parseInt(cpf); // Converte o cpf para inteiro
-                int telefoneInt = Integer.parseInt(telefone); // Converte o telefone para inteiro
-
                 // Chama o método cadastrar com os dados válidos
-                operacoes.cadastrar(nome, Integer.toString(cpfInt), Double.toString(telefoneInt), email, endereco);
-
-                // Atualiza a tabela após o cadastro bem-sucedido
-                atualizarTabela();
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "CPF e telefone devem ser números válidos.", "Erro de Cadastro",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
-            // Limpar campos após o cadastro bem-sucedido
+                operacoes.cadastrar(nome, cpf, telefone, email, endereco);
+                // Limpar campos após o cadastro bem-sucedido
             nomeText.setText("");
             cpfText.setText("");
             telText.setText("");
             emailText.setText("");
             enderecoText.setText("");
+
+            }catch (NumberFormatException ex) {
+                // Exibe uma mensagem de erro ao usuário se houver problemas na conversão
+                JOptionPane.showMessageDialog(this, "Dados inválidos. Verifique as informações.", "Erro de Cadastro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            
         });
 
         // Tratamento do botão "Editar"
         editar.addActionListener(e -> {
+             operacoes.atualizar(nomeText.getText(), cpfText.getText(), telText.getText(), emailText.getText(), enderecoText.getText());
             nomeText.setText("");
             cpfText.setText("");
             telText.setText("");
