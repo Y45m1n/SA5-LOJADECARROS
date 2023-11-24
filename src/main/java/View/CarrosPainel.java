@@ -1,7 +1,6 @@
 package View;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,15 +16,16 @@ import Controller.CarrosControl;
 import Controller.CarrosDAO;
 import Model.Carros;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.NumberFormat;
+
 
 public class CarrosPainel extends JPanel {
     // Atributos(componentes)
     private JButton cadastrar, apagar, editar;
-    private JTextField carMarcaField, carModeloField, carAnoField, carPrecoField, carCorField, carPlacaField;
+    private JTextField marcaText, modeloText, anoText, precoText, corText, placaText;
     private List<Carros> carros;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -40,36 +40,35 @@ public class CarrosPainel extends JPanel {
 
         add(new JLabel("Cadastro Carros"));
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2));
+        inputPanel.setLayout(new GridLayout(6, 2));
         inputPanel.add(new JLabel("Marca"));
-        carMarcaField = new JTextField(20);
-        inputPanel.add(carMarcaField);
+        marcaText = new JTextField(20);
+        inputPanel.add(marcaText);
         inputPanel.add(new JLabel("Modelo"));
-        carModeloField = new JTextField(20);
-        inputPanel.add(carModeloField);
+        modeloText = new JTextField(20);
+        inputPanel.add(modeloText);
         inputPanel.add(new JLabel("Ano"));
-        carAnoField = new JTextField(20);
-        inputPanel.add(carAnoField);
+        anoText = new JTextField(20);
+        inputPanel.add(anoText);
          inputPanel.add(new JLabel("Preço"));
-        carPrecoField = new JTextField(20);
-        inputPanel.add(carPrecoField);
+        precoText = new JTextField(20);
+        inputPanel.add(precoText);
          inputPanel.add(new JLabel("Cor"));
-        carCorField = new JTextField(20);
-        inputPanel.add(carCorField);
+        corText = new JTextField(20);
+        inputPanel.add(corText);
         inputPanel.add(new JLabel("Placa"));
-        carPlacaField = new JTextField(20);
-        inputPanel.add(carPlacaField);
+        placaText = new JTextField(20);
+        inputPanel.add(placaText);
         add(inputPanel);
         JPanel botoes = new JPanel();
         botoes.add(cadastrar = new JButton("Cadastrar"));
+        cadastrar.setBackground(Color.GREEN);
         botoes.add(editar = new JButton("Editar"));
+        editar.setBackground(Color.ORANGE);
         botoes.add(apagar = new JButton("Apagar"));
+        apagar.setBackground(Color.RED);
         add(botoes);
 
-        // Dicas de uso
-        cadastrar.setToolTipText("Cadastrar novo carro");
-        editar.setToolTipText("Editar registro selecionado");
-        apagar.setToolTipText("Apagar registro selecionado");
 
         // tabela de carros
         JScrollPane jSPane = new JScrollPane();
@@ -90,12 +89,12 @@ public class CarrosPainel extends JPanel {
             public void mouseClicked(MouseEvent evt) {
                 linhaSelecionada = table.rowAtPoint(evt.getPoint());
                 if (linhaSelecionada != -1) {
-                    carMarcaField.setText((String) table.getValueAt(linhaSelecionada, 0));
-                    carModeloField.setText((String) table.getValueAt(linhaSelecionada, 1));
-                    carAnoField.setText((String) table.getValueAt(linhaSelecionada, 2));
-                     carPrecoField.setText((String) table.getValueAt(linhaSelecionada, 3));
-                      carCorField.setText((String) table.getValueAt(linhaSelecionada, 4));
-                    carPlacaField.setText((String) table.getValueAt(linhaSelecionada, 5));
+                    marcaText.setText((String) table.getValueAt(linhaSelecionada, 0));
+                    modeloText.setText((String) table.getValueAt(linhaSelecionada, 1));
+                    anoText.setText((String) table.getValueAt(linhaSelecionada, 2));
+                     precoText.setText((String) table.getValueAt(linhaSelecionada, 3));
+                      corText.setText((String) table.getValueAt(linhaSelecionada, 4));
+                    placaText.setText((String) table.getValueAt(linhaSelecionada, 5));
                    
                 }
             }
@@ -109,12 +108,12 @@ public class CarrosPainel extends JPanel {
         // banco de dados
 
         cadastrar.addActionListener(e -> {
-            String marca = carMarcaField.getText();
-            String modelo = carModeloField.getText();
-            String ano = carAnoField.getText();
-             String preco = carPrecoField.getText();
-              String cor = carCorField.getText();
-            String placa = carPlacaField.getText();
+            String marca = marcaText.getText();
+            String modelo = modeloText.getText();
+            String ano = anoText.getText();
+             String preco = precoText.getText();
+              String cor = corText.getText();
+            String placa = placaText.getText();
            
             // Verifica se os campos obrigatórios não estão vazios
             if (marca.isEmpty() || modelo.isEmpty() || ano.isEmpty() || preco.isEmpty() || cor.isEmpty()|| placa.isEmpty()) {
@@ -130,12 +129,12 @@ public class CarrosPainel extends JPanel {
                 operacoes.cadastrar(marca, modelo, ano, preco, cor, placa);
 
                 // Limpa os campos após o cadastro bem-sucedido
-                carMarcaField.setText("");
-                carModeloField.setText("");
-                carAnoField.setText("");
-                carPrecoField.setText("");
-                carCorField.setText("");
-                carPlacaField.setText("");
+                marcaText.setText("");
+                modeloText.setText("");
+                anoText.setText("");
+                precoText.setText("");
+                corText.setText("");
+                placaText.setText("");
             } catch (NumberFormatException ex) {
                 // Exibe uma mensagem de erro ao usuário se houver problemas na conversão
                 JOptionPane.showMessageDialog(this, "Ano e Valor devem ser números válidos.", "Erro de Cadastro",
@@ -145,29 +144,29 @@ public class CarrosPainel extends JPanel {
 
         // Tratamento do botao editar
         editar.addActionListener(e -> {
-            operacoes.atualizar(carMarcaField.getText(), carModeloField.getText(), carAnoField.getText(), carPrecoField.getText(), carCorField.getText(), carPlacaField.getText());
+            operacoes.atualizar(marcaText.getText(), modeloText.getText(), anoText.getText(), precoText.getText(), corText.getText(), placaText.getText());
 
             // Limpa os campos após a atualização, independentemente do sucesso ou falha
-            carMarcaField.setText("");
-            carModeloField.setText("");
-            carAnoField.setText("");
-             carPrecoField.setText("");
-              carCorField.setText("");
-            carPlacaField.setText("");
+            marcaText.setText("");
+            modeloText.setText("");
+            anoText.setText("");
+             precoText.setText("");
+              corText.setText("");
+            placaText.setText("");
            
         });
 
         // Tratamento do botao apagar
         apagar.addActionListener(e -> {
-            operacoes.apagar(carPlacaField.getText());
+            operacoes.apagar(placaText.getText());
 
             // Limpa os campos após a exclusão, independentemente do sucesso ou falha
-            carMarcaField.setText("");
-            carModeloField.setText("");
-            carAnoField.setText("");
-             carPrecoField.setText("");
-              carCorField.setText("");
-            carPlacaField.setText("");
+            marcaText.setText("");
+            modeloText.setText("");
+            anoText.setText("");
+             precoText.setText("");
+              corText.setText("");
+            placaText.setText("");
         });
     }
 
